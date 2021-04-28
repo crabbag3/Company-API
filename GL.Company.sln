@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29609.76
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GL.Company", "GL.Company\GL.Company.csproj", "{E929EBCE-904B-44A3-84D0-F56CC5EEA3FB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Models", "1 - Models", "{803587FD-E1E9-412D-8A1C-A674E1EB232F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Interfaces", "2 - Interfaces", "{D99C9B98-959D-448F-868D-D179F957C6FD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Services", "3 - Services", "{2F03D907-774F-467A-9D11-061849997D91}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Infrastructure", "4 - Infrastructure", "{07728A38-8384-4387-9413-7F46ACA50CC0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5 - Client", "5 - Client", "{A6234920-A4E0-4AC2-B268-5364239F258D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GL.Enumerations", "GL.Enumerations\GL.Enumerations.csproj", "{AEFB8077-C96F-4107-8CCE-43825113384F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GL.Data", "GL.Data\GL.Data.csproj", "{249ED48C-4105-46CA-A7FA-73542003135C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GL.Core", "GL.Core\GL.Core.csproj", "{FBD6D838-CD39-4958-A33E-96D4DABE04BB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E929EBCE-904B-44A3-84D0-F56CC5EEA3FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E929EBCE-904B-44A3-84D0-F56CC5EEA3FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E929EBCE-904B-44A3-84D0-F56CC5EEA3FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E929EBCE-904B-44A3-84D0-F56CC5EEA3FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEFB8077-C96F-4107-8CCE-43825113384F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEFB8077-C96F-4107-8CCE-43825113384F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEFB8077-C96F-4107-8CCE-43825113384F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEFB8077-C96F-4107-8CCE-43825113384F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{249ED48C-4105-46CA-A7FA-73542003135C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{249ED48C-4105-46CA-A7FA-73542003135C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{249ED48C-4105-46CA-A7FA-73542003135C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{249ED48C-4105-46CA-A7FA-73542003135C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBD6D838-CD39-4958-A33E-96D4DABE04BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBD6D838-CD39-4958-A33E-96D4DABE04BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBD6D838-CD39-4958-A33E-96D4DABE04BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBD6D838-CD39-4958-A33E-96D4DABE04BB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E929EBCE-904B-44A3-84D0-F56CC5EEA3FB} = {A6234920-A4E0-4AC2-B268-5364239F258D}
+		{AEFB8077-C96F-4107-8CCE-43825113384F} = {803587FD-E1E9-412D-8A1C-A674E1EB232F}
+		{249ED48C-4105-46CA-A7FA-73542003135C} = {07728A38-8384-4387-9413-7F46ACA50CC0}
+		{FBD6D838-CD39-4958-A33E-96D4DABE04BB} = {803587FD-E1E9-412D-8A1C-A674E1EB232F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D730DD27-BD49-4606-9577-A7016084E178}
+	EndGlobalSection
+EndGlobal
