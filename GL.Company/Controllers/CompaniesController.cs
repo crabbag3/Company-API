@@ -2,19 +2,20 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using GL.Data;
 using GL.Core.Binding;
+using GL.Data;
+using GL.Services.Interfaces;
 
-namespace GL.Company.Controllers
+namespace GL.Company.Api
 {
     [Route("Company")]
     public class CompaniesController : Controller
     {
-        private readonly CompanyContext _context;
+        private readonly ICompanyService companyService;
 
-        public CompaniesController(CompanyContext context)
+        public CompaniesController(ICompanyService companyService)
         {
-            _context = context;
+            this.companyService = companyService;
         }
 
         /// <summary>
@@ -22,9 +23,12 @@ namespace GL.Company.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Get()
         {
-            return Ok(await _context.Companies.ToListAsync());
+            var result = await companyService.GetAllAsync();
+            if (result.Any())
+                return Ok(result);
+            return NotFound();
         }
 
         /// <summary>
@@ -32,22 +36,26 @@ namespace GL.Company.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("Details/{id}")]
-        public async Task<IActionResult> Details(string id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get([FromRoute]int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            var result = await companyService.GetAsync(id);
+            if (result != null)
+                return Ok(result);
+            return NotFound();
+        }
 
-            var company = await _context.Companies
-                .FirstOrDefaultAsync(m => m.ISIN == id);
-            if (company == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(company);
+        /// <summary>
+        /// Gets an existing company by their ISIN
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("{ISIN}")]
+        public async Task<IActionResult> GetbyIsin(string id)
+        {
+            var result = await companyService.GetByIsinAsync(id);
+            // error handling
+            return Ok(result);
         }
 
         /// <summary>
@@ -57,15 +65,19 @@ namespace GL.Company.Controllers
         /// <returns></returns>
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Exchange,Ticker,Website")] CompanyBindingModel company)
+        public async Task<IActionResult> Create([FromBody] CompanyBindingModel company)
         {
-            if (ModelState.IsValid)
+            await companyService.AddAsync(new Core.Models.Company
             {
-                _context.Add(company);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return Ok(company);
+                Name = company.Name,
+                Exchange = company.Exchange,
+                Ticker = company.Ticker,
+                ISIN = company.ISIN,
+                Website = company?.Website
+            });
+
+            // TODO: Return id ??
+            return Ok();
         }
 
         /// <summary>
@@ -76,60 +88,27 @@ namespace GL.Company.Controllers
         [HttpPut]
         public async Task<IActionResult> Edit([FromBody] UpdateCompanyBindingModel company)
         {
-            if (company.Id != company.ISIN)
+            await companyService.UpdateAsync(new Core.Models.Company
             {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(company);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CompanyExists(company.ISIN))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return Ok(company);
+                Name = company.Name,
+                Exchange = company.Exchange,
+                Ticker = company.Ticker,
+                ISIN = company.ISIN,
+                Website = company?.Website
+            });
+            return Ok();
         }
 
         /// <summary>
-        /// Deletes a company based on the ID passes
+        /// Deletes a company based on the ISIN passed
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete]
         public async Task<IActionResult> Delete(string id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var company = await _context.Companies
-                .FirstOrDefaultAsync(m => m.ISIN == id);
-            if (company == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(company);
-        }
-
-        private bool CompanyExists(string id)
-        {
-            return _context.Companies.Any(e => e.ISIN == id);
+            // TODO: Not implemented - not apart of requirments
+            return Ok();
         }
     }
 }

@@ -19,5 +19,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\GL.Data\GL.Data.csproj" />
+        <ProjectReference Include="..\GL.Services.Interfaces\GL.Services.Interfaces.csproj" />
+        <ProjectReference Include="..\GL.Services\GL.Services.csproj" />
     </ItemGroup>
 </Project>

@@ -9,7 +9,7 @@ namespace GL.Core.Binding
     {
         public string Name { get; set; } = null!;
 
-        public Exchange Exchange { get; set; }
+        public string Exchange { get; set; } = null!;
 
         public string Ticker { get; set; } = null!;
 

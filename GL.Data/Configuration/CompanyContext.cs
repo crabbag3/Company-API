@@ -1,4 +1,5 @@
 ﻿using GL.Core;
+using GL.Core.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 

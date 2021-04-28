@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GL.Data;
+using GL.Services;
+using GL.Services.Interfaces;
+using GL.Services.Validators;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,8 +33,20 @@ namespace GL.Company
             services.AddDbContext<CompanyContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            #region Services
 
-            services.AddSwaggerGen();
+            services.AddScoped<ICompanyService, CompanyService>();
+
+            #endregion Services
+
+            #region Validators
+
+            services.AddScoped<CompanyValidator>();
+
+            #endregion Validators
+
+            services.AddSwaggerGen()
+                .AddFluentValidation();
 
             // TODO: Add AddDatabaseDeveloperPageExceptionFilter - only in .NET 5
         }
@@ -52,8 +67,6 @@ namespace GL.Company
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            app.UseAuthorization();
-
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
 
@@ -66,6 +79,7 @@ namespace GL.Company
             });
 
             app.UseRouting();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
