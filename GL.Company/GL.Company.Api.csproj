@@ -14,7 +14,11 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="Microsoft.Owin.Host.SystemWeb" Version="4.1.1" />
+        <PackageReference Include="Microsoft.Owin.Security" Version="4.1.1" />
         <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
+        <PackageReference Include="Okta.AspNet" Version="1.8.0" />
+        <PackageReference Include="Okta.AspNetCore" Version="3.5.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.3" />
     </ItemGroup>
 

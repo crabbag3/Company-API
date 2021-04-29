@@ -9,7 +9,7 @@ import {
 } from '@okta/okta-angular';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, pathMatch: 'full', },
+  { path: '', component: HomeComponent, pathMatch: 'full',  },
   {
     path: 'login/callback',
     component: OktaCallbackComponent},

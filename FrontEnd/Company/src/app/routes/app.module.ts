@@ -57,7 +57,7 @@ const config = {
   providers: [CompanyDataService,
    
     { provide: OKTA_CONFIG, useValue: config },
- //   {  //provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    {  provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     //{ provide: config, useValue: config}
   ],
   bootstrap: [AppComponent]

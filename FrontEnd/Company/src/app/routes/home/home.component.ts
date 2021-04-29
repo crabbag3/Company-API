@@ -14,23 +14,35 @@ export class HomeComponent implements OnInit {
   public companyData: Array<any>
   public currentCompany: any;
   public errors: any;
+  public error: any;
   public isAuthenticated: boolean;
+  public userName: string;
 
   constructor(private companyDataService: CompanyDataService, public oktaAuth: OktaAuthService, ) {
+   
     // get authentication state for immediate use
     this.oktaAuth.isAuthenticated().then(result => {
       this.isAuthenticated = result;
     });
 
+    // subscribe to authentication state changes
+    this.oktaAuth.$authenticationState.subscribe(
+      (isAuthenticated: boolean) => this.isAuthenticated = isAuthenticated
+    );
     this.companyData = [];
     this.errors = "";
     this.currentCompany = this.setInitialValuesForCompanyData();
+  //  oktaAuth.signInWithRedirect();
    
   }
 
   async ngOnInit() {
     this.loadData();
     this.isAuthenticated = await this.oktaAuth.isAuthenticated();
+    if (this.isAuthenticated) {
+      const userClaims = await this.oktaAuth.getUser();
+      this.userName = userClaims.name;
+    }
   }
 
   public loadData(): void {
@@ -48,11 +60,14 @@ export class HomeComponent implements OnInit {
       website: ""
     }
   }
-  public login() {
-    
-    this.oktaAuth.signInWithRedirect({
-      originalUri: ''
-    });
+  async login() {
+    console.log('starting to log in');
+    try {
+       await this.oktaAuth.signInWithRedirect().catch(err => { console.log("error", err)});
+    } catch (err) {
+      console.error(err);
+      this.error = err;
+    }
   }
 
   public createOrUpdateCompany = function (company: any) {

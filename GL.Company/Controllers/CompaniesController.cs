@@ -7,10 +7,12 @@ using GL.Data;
 using GL.Services.Interfaces;
 using GL.Core.Response;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GL.Company.Api
 {
     [Route("Company")]
+  //  [Authorize]
     public class CompaniesController : Controller
     {
         private readonly ICompanyService companyService;

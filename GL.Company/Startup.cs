@@ -10,6 +10,7 @@ using GL.Data;
 using GL.Services;
 using GL.Services.Interfaces;
 using GL.Services.Validators;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -34,6 +35,13 @@ namespace GL.Company
         {
             services.AddDbContext<CompanyContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.Authority = "https://dev-95983139.okta.com/oauth2/default";
+        options.Audience = "api://default";
+    });
 
             services.AddMvc(opt =>
             {
@@ -97,6 +105,9 @@ namespace GL.Company
 
             app.UseRouting();
             app.UseCors("CorsPolicy");
+            app.UseAuthentication();
+
+            //app.UseMvc();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
