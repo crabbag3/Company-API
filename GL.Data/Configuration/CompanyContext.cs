@@ -15,7 +15,9 @@ namespace GL.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Company>().ToTable("Company");
+            modelBuilder.Entity<Company>().ToTable("Company")
+                .HasIndex(x => x.ISIN)
+                .IsUnique();
         }
     }
 }

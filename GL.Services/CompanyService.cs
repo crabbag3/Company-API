@@ -12,18 +12,20 @@ namespace GL.Services
 {
     public class CompanyService : ICompanyService
     {
-        private readonly CompanyContext _context; // TODO: Add interface
-        private readonly CompanyValidator validator;
+        private readonly CompanyContext _context;
 
-        public CompanyService(CompanyContext context, CompanyValidator validator)
+        public CompanyService(CompanyContext context)
         {
             _context = context;
-            this.validator = validator;
         }
 
         public async Task AddAsync(Company company)
         {
-            validator.Validate(company);
+            // check is dupliacte ISIN
+            if (_context.Companies.Any(m => m.ISIN == company.ISIN))
+                // TODO: Add global error handler
+                throw new Exception("Cannot have two companies with the same ISIN");
+
             _context.Add(company);
             await _context.SaveChangesAsync();
         }
@@ -47,10 +49,16 @@ namespace GL.Services
 
         public async Task UpdateAsync(Company company)
         {
-            validator.Validate(company);
+            var oldCompany = await _context.Companies.FirstOrDefaultAsync(
+                m => m.ISIN == company.ISIN);
+            oldCompany.Name = company.Name;
+            oldCompany.Exchange = company.Exchange;
+            oldCompany.Ticker = company.Ticker;
+            oldCompany.Website = company.Website;
+
+            _context.Entry(oldCompany).State = EntityState.Modified;
             try
             {
-                _context.Update(company);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)

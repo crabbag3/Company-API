@@ -2,6 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using Gl.ExceptionHandler;
+using GL.Core.Binding;
 using GL.Data;
 using GL.Services;
 using GL.Services.Interfaces;
@@ -28,25 +32,37 @@ namespace GL.Company
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
-
             services.AddDbContext<CompanyContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddMvc(opt =>
+            {
+                opt.Filters.Add(typeof(ValidatorActionFilter));
+                //  TODO: Register all validators from assembly
+            }).AddFluentValidation();
+
             #region Services
 
+            services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
+            {
+                builder.WithExposedHeaders("Content-Disposition")
+                       .AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
             services.AddScoped<ICompanyService, CompanyService>();
+
+            // TODO: Add seperate class for DI
 
             #endregion Services
 
             #region Validators
 
-            services.AddScoped<CompanyValidator>();
+            services.AddTransient<IValidator<CompanyBindingModel>, CompanyBindingModelValidator>();
 
             #endregion Validators
 
-            services.AddSwaggerGen()
-                .AddFluentValidation();
+            services.AddSwaggerGen();
 
             // TODO: Add AddDatabaseDeveloperPageExceptionFilter - only in .NET 5
         }
@@ -64,6 +80,7 @@ namespace GL.Company
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -79,6 +96,7 @@ namespace GL.Company
             });
 
             app.UseRouting();
+            app.UseCors("CorsPolicy");
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {

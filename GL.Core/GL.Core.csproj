@@ -6,10 +6,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Folder Include="Response\" />
-    </ItemGroup>
-
-    <ItemGroup>
         <ProjectReference Include="..\GL.Enumerations\GL.Enumerations.csproj" />
     </ItemGroup>
 </Project>

@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using GL.Core.Binding;
 using GL.Data;
 using GL.Services.Interfaces;
+using GL.Core.Response;
+using System.Collections.Generic;
 
 namespace GL.Company.Api
 {
@@ -27,7 +29,16 @@ namespace GL.Company.Api
         {
             var result = await companyService.GetAllAsync();
             if (result.Any())
-                return Ok(result);
+                return Ok(
+                result.Select(m => new CompanyResponseModel
+                {
+                    Name = m.Name,
+                    Exchange = m.Exchange,
+                    ISIN = m.ISIN,
+                    Ticker = m.Ticker,
+                    Website = m.Website
+                }));
+
             return NotFound();
         }
 
@@ -41,7 +52,14 @@ namespace GL.Company.Api
         {
             var result = await companyService.GetAsync(id);
             if (result != null)
-                return Ok(result);
+                return Ok(new CompanyResponseModel
+                {
+                    Name = result.Name,
+                    Exchange = result.Exchange,
+                    ISIN = result.ISIN,
+                    Ticker = result.Ticker,
+                    Website = result.Website
+                });
             return NotFound();
         }
 
@@ -50,12 +68,21 @@ namespace GL.Company.Api
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("{ISIN}")]
-        public async Task<IActionResult> GetbyIsin(string id)
+        [HttpGet("ISIN/{ISIN}")]
+        public async Task<IActionResult> GetbyIsin(string ISIN)
         {
-            var result = await companyService.GetByIsinAsync(id);
-            // error handling
-            return Ok(result);
+            var result = await companyService.GetByIsinAsync(ISIN);
+
+            if (result != null)
+                return Ok(new CompanyResponseModel
+                {
+                    Name = result.Name,
+                    Exchange = result.Exchange,
+                    ISIN = result.ISIN,
+                    Ticker = result.Ticker,
+                    Website = result.Website
+                });
+            return NotFound();
         }
 
         /// <summary>
@@ -86,7 +113,7 @@ namespace GL.Company.Api
         /// <param name="company"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IActionResult> Edit([FromBody] UpdateCompanyBindingModel company)
+        public async Task<IActionResult> Edit([FromBody] CompanyBindingModel company)
         {
             await companyService.UpdateAsync(new Core.Models.Company
             {

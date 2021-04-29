@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29609.76
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GL.Company", "GL.Company\GL.Company.csproj", "{E929EBCE-904B-44A3-84D0-F56CC5EEA3FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GL.Company.Api", "GL.Company\GL.Company.Api.csproj", "{E929EBCE-904B-44A3-84D0-F56CC5EEA3FB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Models", "1 - Models", "{803587FD-E1E9-412D-8A1C-A674E1EB232F}"
 EndProject
@@ -19,13 +19,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GL.Enumerations", "GL.Enume
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GL.Data", "GL.Data\GL.Data.csproj", "{249ED48C-4105-46CA-A7FA-73542003135C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GL.Core", "GL.Core\GL.Core.csproj", "{FBD6D838-CD39-4958-A33E-96D4DABE04BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GL.Core", "GL.Core\GL.Core.csproj", "{FBD6D838-CD39-4958-A33E-96D4DABE04BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GL.Services", "GL.Services\GL.Services.csproj", "{5C2A1306-175C-462E-A6AD-FF53684462F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GL.Services", "GL.Services\GL.Services.csproj", "{5C2A1306-175C-462E-A6AD-FF53684462F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GL.Services.Interfaces", "GL.Services.Interfaces\GL.Services.Interfaces.csproj", "{08BF900A-F54E-4F65-B45C-C1BEC50473C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GL.Services.Interfaces", "GL.Services.Interfaces\GL.Services.Interfaces.csproj", "{08BF900A-F54E-4F65-B45C-C1BEC50473C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GL.Tests", "GL.Tests\GL.Tests.csproj", "{8D3A4504-0241-4BD5-9439-723B5812AD65}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GL.Tests", "GL.Tests\GL.Tests.csproj", "{8D3A4504-0241-4BD5-9439-723B5812AD65}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gl.ExceptionHandler", "Gl.ExceptionHandler\Gl.ExceptionHandler.csproj", "{E832CF82-2080-4C99-8327-2E228C9C0BC7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +63,10 @@ Global
 		{8D3A4504-0241-4BD5-9439-723B5812AD65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D3A4504-0241-4BD5-9439-723B5812AD65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D3A4504-0241-4BD5-9439-723B5812AD65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E832CF82-2080-4C99-8327-2E228C9C0BC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E832CF82-2080-4C99-8327-2E228C9C0BC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E832CF82-2080-4C99-8327-2E228C9C0BC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E832CF82-2080-4C99-8327-2E228C9C0BC7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,6 +78,7 @@ Global
 		{FBD6D838-CD39-4958-A33E-96D4DABE04BB} = {803587FD-E1E9-412D-8A1C-A674E1EB232F}
 		{5C2A1306-175C-462E-A6AD-FF53684462F0} = {2F03D907-774F-467A-9D11-061849997D91}
 		{08BF900A-F54E-4F65-B45C-C1BEC50473C2} = {D99C9B98-959D-448F-868D-D179F957C6FD}
+		{E832CF82-2080-4C99-8327-2E228C9C0BC7} = {07728A38-8384-4387-9413-7F46ACA50CC0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D730DD27-BD49-4606-9577-A7016084E178}
