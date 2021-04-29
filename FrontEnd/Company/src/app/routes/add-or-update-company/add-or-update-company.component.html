@@ -1,0 +1,33 @@
+<div>
+  <h2 *ngIf="!companyInfo || companyInfo.id === undefined">Add record</h2>
+  <h2 *ngIf="companyInfo && companyInfo.id !== undefined">Update record (ID:{{companyInfo.id}} )</h2>
+  <form>
+    <div class="form-group">
+      <label for="date-input">Name</label>
+      <input palceholder="Name" id="name-input" name="name-input" [(ngModel)]="companyInfo.name" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label for="distance-input">Exchange</label>
+      <input id="exchange-input" name="exchange-input" [(ngModel)]="companyInfo.exchange" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label for="time-input">Ticker</label>
+      <input id="ticker-input" name="ticker-input" [(ngModel)]="companyInfo.ticker" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label for="isin-input">ISIN</label>
+      <input required pattern="^[A-Za-z]{2}.*"
+             pattern-notification="First two digits can only contain letters"
+             [(ngModel)]="companyInfo.isin" id="isin-input" name="isin-input" class="form-control" />
+    </div>
+
+
+
+      <div class="form-group">
+        <label for="time-input">Website</label>
+        <input id="website-input" name="website-input" [(ngModel)]="companyInfo.website" class="form-control" />
+      </div>
+      <button class="btn btn-primary" (click)="addOrUpdateCompanyRecord($event);">Save</button>
+
+</form>
+</div>

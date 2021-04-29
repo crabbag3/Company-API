@@ -1,0 +1,25 @@
+<div class="container" *ngIf="!isAuthenticated">
+  <div class="row">
+    <div class="col-md-12">
+      <p class="text-center">Company Application</p>
+      <p class="text-center">
+        <button class="btn btn-primary"  (click)="login()">Log in</button>
+      </p>
+    </div>
+  </div>
+</div>
+<div class="container" *ngIf="isAuthenticated">
+  <div class="row">
+    <div class="col-md-12 text-right">
+      <button class="btn" (click)="oktaAuth.logout();">Log out</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <app-add-or-update-company (companyCreated)="createOrUpdateCompany($event)" [companyInfo]="currentCompany"></app-add-or-update-company>
+    </div>
+    <div class="col-md-8">
+      <app-grid-company [companyData]="companyData" (editClicked)="editClicked($event)" (newClicked)="newClicked()" (recordDeleted)="deleteClicked($event)"></app-grid-company>
+    </div>
+  </div>
+  </div>
