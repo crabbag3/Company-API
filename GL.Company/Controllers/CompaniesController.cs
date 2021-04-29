@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace GL.Company.Api
 {
     [Route("Company")]
-  //  [Authorize]
+    [Authorize]
     public class CompaniesController : Controller
     {
         private readonly ICompanyService companyService;

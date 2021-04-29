@@ -6,7 +6,7 @@ import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/operator/mergeMap';
 
 import { OktaAuthService } from '@okta/okta-angular';
-import { Observable } from 'rxjs';
+import { Observable, from } from 'rxjs';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -15,31 +15,20 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return this.isAuthenticated()
-      .mergeMap((isAuthenticated) => {
-        if (!isAuthenticated) {
-          return next.handle(request);
+    return from(this.handleAccess(request, next));
+  }
+
+  private handleAccess(request: HttpRequest<any>, next: HttpHandler): Promise<HttpEvent<any>> {
+    // Only add an access token to whitelisted origins
+    const allowedOrigins = ['https://localhost'];
+    if (allowedOrigins.some(url => request.urlWithParams.includes(url))) {
+      const accessToken = this.oktaAuth.getAccessToken();
+      request = request.clone({
+        setHeaders: {
+          Authorization: 'Bearer ' + accessToken
         }
-
-        return this.getAccessToken()
-          .mergeMap((accessToken) => {
-            request = request.clone({
-              setHeaders: {
-                Authorization: `Bearer ${accessToken}`
-              }
-            });
-
-            return next.handle(request);
-          })
       });
-  }
-
-  private isAuthenticated(): Observable<boolean> {
-    return Observable.fromPromise(this.oktaAuth.isAuthenticated());
-  }
-
-  private getAccessToken(): Observable<string> {
-    return this.getAccessToken();
-    // todo is this okay?
+    }
+    return next.handle(request).toPromise();
   }
 }

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -18,6 +20,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Any;
+using Microsoft.OpenApi.Interfaces;
+using Microsoft.OpenApi.Models;
 
 namespace GL.Company
 {
@@ -70,7 +75,31 @@ namespace GL.Company
 
             #endregion Validators
 
-            services.AddSwaggerGen();
+            // swagger setup
+            services.AddSwaggerGen(c =>
+            {
+                // Set the comments path for the Swagger JSON and UI.
+                //var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                //var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                //c.IncludeXmlComments(xmlPath);
+
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    In = ParameterLocation.Header,
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+                {
+                    new OpenApiSecurityScheme{
+                        Reference = new OpenApiReference{
+                            Id = "Bearer",
+                            Type = ReferenceType.SecurityScheme
+                        }
+                    },new List<string>()
+                }});
+            });
 
             // TODO: Add AddDatabaseDeveloperPageExceptionFilter - only in .NET 5
         }
