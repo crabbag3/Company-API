@@ -2,17 +2,18 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using GL.Core.Binding;
-using GL.Data;
-using GL.Services.Interfaces;
-using GL.Core.Response;
+using GlassLewis.Core.Binding;
+using GlassLewis.Data;
+using GlassLewis.Services.Interfaces;
+using GlassLewis.Core.Response;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
+using GlassLewis.Core.Models;
 
-namespace GL.Company.Api
+namespace GlassLewis.Api
 {
-    [Route("Company")]
     [Authorize]
+    [Route("Company")]
     public class CompaniesController : Controller
     {
         private readonly ICompanyService companyService;
@@ -133,10 +134,10 @@ namespace GL.Company.Api
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpDelete]
-        public async Task<IActionResult> Delete(string id)
+        [HttpDelete("{isin}")]
+        public async Task<IActionResult> Delete(string isin)
         {
-            // TODO: Not implemented - not apart of requirments
+            await companyService.Remove(isin);
             return Ok();
         }
     }

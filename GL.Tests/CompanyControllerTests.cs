@@ -1,19 +1,14 @@
-﻿using GL.Company.Api;
-using GL.Core.Models;
-using GL.Core.Response;
-using GL.Data;
-using GL.Services;
-using GL.Services.Interfaces;
+﻿using GlassLewis.Api;
+using GlassLewis.Core.Response;
+using GlassLewis.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace GL.Tests
+namespace GlassLewis.Tests
 {
     public class CompanyControllerTests
     {

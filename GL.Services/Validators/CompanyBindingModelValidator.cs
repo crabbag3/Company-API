@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
-using GL.Core.Binding;
+using GlassLewis.Core.Binding;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace GL.Services.Validators
+namespace GlassLewis.Services.Validators
 {
     public class CompanyBindingModelValidator : AbstractValidator<CompanyBindingModel>
     {

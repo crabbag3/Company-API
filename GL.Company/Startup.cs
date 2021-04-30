@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Gl.ExceptionHandler;
-using GL.Core.Binding;
-using GL.Data;
-using GL.Services;
-using GL.Services.Interfaces;
-using GL.Services.Validators;
+using GlassLewis.Core.Binding;
+using GlassLewis.Data;
+using GlassLewis.Services;
+using GlassLewis.Services.Interfaces;
+using GlassLewis.Services.Validators;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -24,7 +24,7 @@ using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Interfaces;
 using Microsoft.OpenApi.Models;
 
-namespace GL.Company
+namespace GlassLewis.Company
 {
     public class Startup
     {
@@ -119,6 +119,12 @@ namespace GL.Company
             }
 
             app.UseHttpsRedirection();
+            app.UseCookieAuthentication(new CookieAuthenticationOptions()
+            {
+                AuthenticationScheme = "Cookies",
+                AutomaticAuthenticate = true
+            });
+
             app.UseStaticFiles();
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.

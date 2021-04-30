@@ -1,9 +1,8 @@
 using FluentValidation.TestHelper;
-using GL.Services.Validators;
-using System;
+using GlassLewis.Services.Validators;
 using Xunit;
 
-namespace GL.Tests
+namespace GlassLewis.Tests
 {
     public class CompanyValidatorTests
     {

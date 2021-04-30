@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GL.Enumerations
+namespace GlassLewis.Enumerations
 {
     public enum Exchange
     {

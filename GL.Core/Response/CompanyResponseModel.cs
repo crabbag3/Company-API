@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GL.Core.Response
+namespace GlassLewis.Core.Response
 {
     public class CompanyResponseModel
     {

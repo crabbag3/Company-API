@@ -1,39 +1,25 @@
-﻿using GL.Company.Api;
-using GL.Core.Models;
-using GL.Core.Response;
-using GL.Data;
-using GL.Services;
-using GL.Services.Interfaces;
-using Microsoft.AspNetCore.Mvc;
+﻿using Gl.ExceptionHandler;
+using GlassLewis.Data;
+using GlassLewis.Services;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace GL.Tests
+namespace GlassLewis.Tests
 {
     public class CompanyServiceTests
     {
         [Fact]
         public async Task PostCompayWithDuplicateISIN_ReturnsException()
         {
-            // Arrange
             var isin = "US0378331005";
+            var context = GetContextWithData();
+            var service = new CompanyService(context);
 
-            var mockSet = new Mock<DbSet<Core.Models.Company>>();
-
-            var mockContext = new Mock<CompanyContext>();
-            mockContext.Setup(m => m.Companies).Returns(mockSet.Object);
-
-            var service = new CompanyService(mockContext.Object);
-
-            // Act
-
-            await Assert.ThrowsAsync<Exception>(() => service.AddAsync(new Core.Models.Company()
+            await Assert.ThrowsAsync<InvalidOperationException>(() => service.AddAsync(new Core.Models.Company()
             {
                 Name = "Test",
                 Exchange = "NASDAQ",
@@ -42,10 +28,61 @@ namespace GL.Tests
             }));
         }
 
-        private List<Core.Models.Company> GetTestCompanies()
+        [Fact]
+        public async Task DeleteCompayThatDoesntExist_ReturnsException()
         {
-            var sessions = new List<Core.Models.Company>();
-            sessions.Add(new Core.Models.Company()
+            var isinThatDoesntExist = "azzz";
+
+            var context = GetContextWithData();
+            var service = new CompanyService(context);
+
+            await Assert.ThrowsAsync<NoRecordFoundException>(() => service.Remove(isinThatDoesntExist));
+        }
+
+        [Fact]
+        public async Task UpdateCompayThatDoesntExist_ReturnsException()
+        {
+            var isinThatDoesntExist = "azzz";
+
+            var context = GetContextWithData();
+            var service = new CompanyService(context);
+
+            await Assert.ThrowsAsync<NoRecordFoundException>(() => service.UpdateAsync(new Core.Models.Company()
+            {
+                Name = "Test",
+                Exchange = "NASDAQ",
+                ISIN = isinThatDoesntExist,
+                Ticker = "TST",
+            }));
+        }
+
+        [Fact]
+        public async Task UpdateCompayThatDoesExist_ReturnsVoid()
+        {
+            var context = GetContextWithData();
+            var service = new CompanyService(context);
+
+            await service.UpdateAsync(new Core.Models.Company()
+            {
+                Name = "Test",
+                Exchange = "NASDAQ",
+                ISIN = "US1104193065",
+                Ticker = "TST",
+            });
+        }
+
+        /// <summary>
+        /// Setup test data and seed our in memory database
+        /// </summary>
+        /// <returns></returns>
+        private CompanyContext GetContextWithData()
+        {
+            var options = new DbContextOptionsBuilder<CompanyContext>()
+                              .UseInMemoryDatabase(Guid.NewGuid().ToString()) // GUID - every test has unique DB
+                              .Options;
+            var context = new CompanyContext(options);
+
+            context.Add(new Core.Models.Company()
             {
                 Name = "Apple Inc.",
                 Exchange = "NASDAQ",
@@ -53,14 +90,18 @@ namespace GL.Tests
                 ISIN = "US0378331005",
                 Website = "http://www.apple.com"
             });
-            sessions.Add(new Core.Models.Company()
+
+            context.Add(new Core.Models.Company()
             {
                 Name = "British Airways Plc",
                 Exchange = "Pink Sheets",
                 Ticker = "BAIRY",
                 ISIN = "US1104193065"
             });
-            return sessions;
+
+            context.SaveChanges();
+
+            return context;
         }
     }
 }

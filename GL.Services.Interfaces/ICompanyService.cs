@@ -1,9 +1,8 @@
-﻿using GL.Core.Models;
-using System;
+﻿using GlassLewis.Core.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace GL.Services.Interfaces
+namespace GlassLewis.Services.Interfaces
 {
     public interface ICompanyService
     {
@@ -16,5 +15,7 @@ namespace GL.Services.Interfaces
         Task<Company> GetByIsinAsync(string ISIN);
 
         Task UpdateAsync(Company company);
+
+        Task Remove(string isin);
     }
 }

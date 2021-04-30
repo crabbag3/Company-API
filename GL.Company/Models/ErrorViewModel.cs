@@ -1,6 +1,6 @@
 using System;
 
-namespace GL.Company.Models
+namespace GlassLewis.Company.Models
 {
     public class ErrorViewModel
     {

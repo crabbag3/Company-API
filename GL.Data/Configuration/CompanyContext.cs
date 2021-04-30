@@ -1,9 +1,9 @@
-﻿using GL.Core;
-using GL.Core.Models;
+﻿using GlassLewis.Core;
+using GlassLewis.Core.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 
-namespace GL.Data
+namespace GlassLewis.Data
 {
     public class CompanyContext : DbContext
     {

@@ -70,13 +70,22 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  async logout() {
+    console.log('starting to log in');
+    try {
+      await this.oktaAuth.signOut().catch(err => { console.log("error", err) });
+    } catch (err) {
+      console.error(err);
+      this.error = err;
+    }
+  }
+
   public createOrUpdateCompany = function (company: any) {
     // if company id is present in companyData, we can assume this is an update
     // otherwise it is adding a new element
     let companyWithId;
     companyWithId = _.find(this.companyData, (el => el.isin === company.isin));
 
-    console.log("does have id", companyWithId);
     if (companyWithId) {
       const updateIndex = _.findIndex(this.companyData, { id: companyWithId.id });
       this.companyDataService.update(company).subscribe(

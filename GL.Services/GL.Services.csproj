@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GL.Data\GL.Data.csproj" />
+    <ProjectReference Include="..\Gl.ExceptionHandler\Gl.ExceptionHandler.csproj" />
     <ProjectReference Include="..\GL.Services.Interfaces\GL.Services.Interfaces.csproj" />
   </ItemGroup>
 

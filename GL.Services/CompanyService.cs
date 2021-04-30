@@ -1,14 +1,15 @@
-﻿using GL.Core.Models;
-using GL.Data;
-using GL.Services.Interfaces;
-using GL.Services.Validators;
+﻿using Gl.ExceptionHandler;
+using GlassLewis.Core.Models;
+using GlassLewis.Data;
+using GlassLewis.Services.Interfaces;
+using GlassLewis.Services.Validators;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GL.Services
+namespace GlassLewis.Services
 {
     public class CompanyService : ICompanyService
     {
@@ -23,8 +24,7 @@ namespace GL.Services
         {
             // check is dupliacte ISIN
             if (_context.Companies.Any(m => m.ISIN == company.ISIN))
-                // TODO: Add global error handler
-                throw new Exception("Cannot have two companies with the same ISIN");
+                throw new InvalidOperationException("Cannot have two companies with the same ISIN");
 
             _context.Add(company);
             await _context.SaveChangesAsync();
@@ -47,10 +47,23 @@ namespace GL.Services
                 .FirstOrDefaultAsync(m => m.ISIN == isin);
         }
 
+        public async Task Remove(string isin)
+        {
+            var companyToDelete = await _context.Companies
+              .FirstOrDefaultAsync(m => m.ISIN == isin);
+            if (companyToDelete is null)
+                throw new NoRecordFoundException($"Company with {isin} does not exist.");
+
+            _context.Remove(companyToDelete);
+        }
+
         public async Task UpdateAsync(Company company)
         {
             var oldCompany = await _context.Companies.FirstOrDefaultAsync(
                 m => m.ISIN == company.ISIN);
+            if (oldCompany is null)
+                throw new NoRecordFoundException($"Company with {company.ISIN} does not exist.");
+
             oldCompany.Name = company.Name;
             oldCompany.Exchange = company.Exchange;
             oldCompany.Ticker = company.Ticker;
@@ -65,7 +78,7 @@ namespace GL.Services
             {
                 if (!CompanyExists(company.ISIN))
                 {
-                    // TODO: Add global execpetion handler
+                    // TODO: Add global exception handler
                     // return NotFound();
                 }
                 else

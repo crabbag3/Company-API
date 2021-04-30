@@ -1,9 +1,9 @@
-﻿using GL.Core;
-using GL.Core.Models;
-using GL.Enumerations;
+﻿using GlassLewis.Core;
+using GlassLewis.Core.Models;
+using GlassLewis.Enumerations;
 using System.Linq;
 
-namespace GL.Data
+namespace GlassLewis.Data
 {
     public static class DbInitializer
     {

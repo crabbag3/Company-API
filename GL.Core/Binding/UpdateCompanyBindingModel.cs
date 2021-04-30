@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GL.Core.Binding
+namespace GlassLewis.Core.Binding
 {
     public class UpdateCompanyBindingModel : CompanyBindingModel
     {

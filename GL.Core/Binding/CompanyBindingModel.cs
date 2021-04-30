@@ -1,9 +1,9 @@
-﻿using GL.Enumerations;
+﻿using GlassLewis.Enumerations;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace GL.Core.Binding
+namespace GlassLewis.Core.Binding
 {
     public class CompanyBindingModel
     {

@@ -1,9 +1,9 @@
-﻿using GL.Enumerations;
+﻿using GlassLewis.Enumerations;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace GL.Core.Models
+namespace GlassLewis.Core.Models
 {
     public class Company
     {
