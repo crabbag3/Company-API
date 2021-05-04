@@ -71,7 +71,7 @@ export class HomeComponent implements OnInit {
   }
 
   async logout() {
-    console.log('starting to log in');
+    console.log('starting to log out');
     try {
       await this.oktaAuth.signOut().catch(err => { console.log("error", err) });
     } catch (err) {

@@ -12,7 +12,6 @@ using GlassLewis.Core.Models;
 
 namespace GlassLewis.Api
 {
-    [Authorize]
     [Route("Company")]
     public class CompaniesController : Controller
     {
@@ -93,8 +92,8 @@ namespace GlassLewis.Api
         /// </summary>
         /// <param name="company"></param>
         /// <returns></returns>
+        [Authorize]
         [HttpPost]
-        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([FromBody] CompanyBindingModel company)
         {
             await companyService.AddAsync(new Core.Models.Company

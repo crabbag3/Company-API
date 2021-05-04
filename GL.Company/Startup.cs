@@ -12,6 +12,7 @@ using GlassLewis.Data;
 using GlassLewis.Services;
 using GlassLewis.Services.Interfaces;
 using GlassLewis.Services.Validators;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -119,11 +120,6 @@ namespace GlassLewis.Company
             }
 
             app.UseHttpsRedirection();
-            app.UseCookieAuthentication(new CookieAuthenticationOptions()
-            {
-                AuthenticationScheme = "Cookies",
-                AutomaticAuthenticate = true
-            });
 
             app.UseStaticFiles();
 
